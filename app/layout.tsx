@@ -3,6 +3,12 @@ import type { ReactNode } from 'react';
 import { Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/navbar';
+import Sidebar from '@/components/sidebar';
+import {
+  VerticalSpacer1,
+  VerticalSpacer2,
+  HorizontalSpacer,
+} from '@/components/spacers';
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -18,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="ro">
       <body className={`${nunito.className}`}>
         <div
           id="top"
@@ -89,7 +95,17 @@ export default function RootLayout({
           id="wrapper"
           className="grid min-h-dvh grid-cols-1 grid-rows-[1fr_1px_auto_1px_auto] pt-26.25 lg:grid-cols-[auto_2.5rem_minmax(0,1fr)_2.5rem] lg:pt-14.25"
         >
-          {children}
+          <Sidebar />
+          <VerticalSpacer1 />
+          <div id="main" className="row-start-1 lg:col-start-3 md:max-w-5xl">
+            <div>Hello from Root layout</div>
+            {children}
+          </div>
+          <VerticalSpacer2 />
+          <HorizontalSpacer />
+          <div id="footer" className="row-start-3">
+            footer
+          </div>
         </div>
       </body>
     </html>

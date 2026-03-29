@@ -8,7 +8,7 @@ export default async function executePreparedQuery(
   connection = await createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: 'Parolamea',
+    password: 'Parolavietii',
     database: 'swgsite',
   });
   const [result] = await connection.execute(query, values);

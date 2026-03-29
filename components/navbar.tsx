@@ -7,8 +7,7 @@ export default function Navbar() {
       <div className="flex items-center gap-6 max-md:hidden">
         <Link
           href={{
-            pathname: '/login',
-            query: { name: 'test' },
+            pathname: '/auth/login',
           }}
           className="shrink-0 text-sm/6 text-neutral-600 px-3 inset-ring inset-ring-neutral-600 rounded-md"
         >
@@ -16,8 +15,7 @@ export default function Navbar() {
         </Link>
         <Link
           href={{
-            pathname: '/register',
-            query: { name: 'test' },
+            pathname: '/auth/register',
           }}
           className="shrink-0 text-sm/6 text-white bg-neutral-600 px-3 inset-ring inset-ring-neutral-600 rounded-md"
         >

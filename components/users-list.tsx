@@ -1,0 +1,83 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { MapPin, Medal } from 'lucide-react';
+// import { getAllUsers } from '@/data-access/users';
+
+export async function Userlist() {
+  // const users = await getAllUsers();
+  // to be deleted
+  const users = [
+    {
+      id: 1,
+      imgpath: 'https://placehold.co/960x540/90a1b9/FFF',
+      fullname: 'Florin Piersic',
+      location: 'Constanta',
+      ispremium: true,
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, sequi.',
+    },
+    {
+      id: 2,
+      imgpath: 'https://placehold.co/960x540/90a1b9/FFF',
+      fullname: 'Draga Olteanu',
+      location: 'Bucuresti',
+      ispremium: false,
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus iure exercitationem mollitia quisquam minus delectus.',
+    },
+    {
+      id: 3,
+      imgpath: 'https://placehold.co/960x540/90a1b9/FFF',
+      fullname: 'Colea Rautu',
+      location: 'Cluj Napoca',
+      ispremium: true,
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, soluta labore dicta accusantium, laboriosam at, libero facere est atque dolores recusandae? At eius omnis possimus pariatur commodi aut velit veritatis?',
+    },
+    {
+      id: 4,
+      imgpath: 'https://placehold.co/960x540/90a1b9/FFF',
+      fullname: 'Elena Cucu',
+      location: 'Constanta',
+      ispremium: true,
+      description:
+        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis placeat quo et.',
+    },
+  ];
+  // ---------------
+  if (users instanceof Error) {
+    return <div>Ceva nu a mers bine...</div>;
+  } else {
+    return (
+      <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+        {/* {users.map(user => <div key={user.id}>{user.joinDate?.toLocaleString()}</div>)} */}
+        {users.map((user) => (
+          <Link key={user.id} href={{ pathname: `/profiles/${user.id}` }}>
+            <div className="sm:rounded-lg sm:overflow-hidden shadow-md">
+              <Image
+                unoptimized={true}
+                width={960}
+                height={540}
+                src={user.imgpath}
+                alt={user.fullname}
+              />
+              <div className="p-2 sm:rounded-b-lg">
+                <h3 className="font-semibold">{user.fullname}</h3>
+                <div className="flex items-center text-sm text-gray-500">
+                  <MapPin />
+                  <p className="pl-1 grow">{user.location}</p>
+                  <Medal />
+                </div>
+                <div className="flex py-4 gap-4">
+                  <p className="text-sm max-h-16 overflow-hidden">
+                    {user.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    );
+  }
+}

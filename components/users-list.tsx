@@ -60,13 +60,16 @@ export async function Userlist() {
                 height={540}
                 src={user.imgpath}
                 alt={user.fullname}
+                className="clip-image"
               />
               <div className="p-2 sm:rounded-b-lg">
                 <h3 className="font-semibold">{user.fullname}</h3>
                 <div className="flex items-center text-sm text-gray-500">
-                  <MapPin />
+                  <MapPin className="size-4" />
                   <p className="pl-1 grow">{user.location}</p>
-                  <Medal />
+                  {user.ispremium && (
+                    <Medal className="size-4 text-orange-500" />
+                  )}
                 </div>
                 <div className="flex py-4 gap-4">
                   <p className="text-sm max-h-16 overflow-hidden">

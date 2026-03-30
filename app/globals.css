@@ -6,7 +6,6 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
-  --font-nunito: 'Nunito Sans', sans-serif;
   @keyframes slide {
     from {
       transform: translateX(100%);
@@ -37,10 +36,24 @@
   button {
     cursor: pointer;
   }
-  .clip-image {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
-    &:hover {
-      clip-path: none;
-    }
+}
+
+@layer components {
+  /* here defined classes */
+  .spacer-1 {
+    @apply row-start-1 col-start-2 row-span-3 border-x border-x-(--pattern-fg) bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed [--pattern-fg:var(--color-gray-950)]/5 max-lg:hidden;
+  }
+  .spacer-2 {
+    @apply row-start-1 col-start-4 row-span-3 border-x border-x-(--pattern-fg) bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed [--pattern-fg:var(--color-gray-950)]/5 max-lg:hidden;
+  }
+  .spacer-horizontal {
+    @apply col-span-full col-start-2 row-start-2 h-px bg-gray-950/5;
+  }
+}
+
+@utility clip-image {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
+  &:hover {
+    clip-path: none;
   }
 }

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const validateRules = {
   required: (item: string | undefined): string =>
@@ -32,8 +32,18 @@ export default function Page() {
   const [data, setData] = useState<FormData>({});
   const [errors, setErrors] = useState({});
 
+  // useEffect(() => {
+  //   console.log('effect');
+  //   console.log(errors);
+  //   return () => {
+  //     console.log('clean up fn');
+  //     console.log(errors);
+  //   };
+  // }, [errors]);
+
   const handleChange = (key: string, value: string) => {
     setData((data) => ({ ...data, [key]: value }));
+    setErrors((e) => ({ ...e, [key]: '' }));
   };
 
   const validateData = () => {
@@ -63,9 +73,13 @@ export default function Page() {
         value={data.username || ''}
         onChange={(event) => {
           handleChange('username', event.target.value);
-          console.log(data);
         }}
       />
+      {(errors as FormData).username && (
+        <p className="text-sm text-red-500 mt-1">
+          {(errors as FormData).username}
+        </p>
+      )}
       <label htmlFor="email">Adresa ta de email</label>
       <input
         type="email"
@@ -74,9 +88,13 @@ export default function Page() {
         value={data.email || ''}
         onChange={(event) => {
           handleChange('email', event.target.value);
-          console.log(data);
         }}
       />
+      {(errors as FormData).email && (
+        <p className="text-sm text-red-500 mt-1">
+          {(errors as FormData).email}
+        </p>
+      )}
       <label htmlFor="password">Alege o parola</label>
       <input
         type="password"
@@ -85,9 +103,13 @@ export default function Page() {
         value={data.password || ''}
         onChange={(event) => {
           handleChange('password', event.target.value);
-          console.log(data);
         }}
       />
+      {(errors as FormData).password && (
+        <p className="text-sm text-red-500 mt-1">
+          {(errors as FormData).password}
+        </p>
+      )}
       <button className="mt-3" onClick={validateData}>
         Next
       </button>

@@ -19,6 +19,8 @@ const validateRules = {
       valueToCheck && valueToCheck.length >= limit
         ? ''
         : `Trebuie sa contina minim ${limit} caractere`,
+  match: (pw1: string, pw2: string): string =>
+    pw1 === pw2 ? '' : 'Parolele nu coincid',
 };
 
 type FormData = {
@@ -58,7 +60,8 @@ export default function Page() {
       validateRules.required(data.password) ||
       validateRules.minLength(8)(data.password);
     e.passwordConfirm =
-      data.password === data.passwordConfirm ? '' : 'Parolele nu coincid!';
+      validateRules.required(data.passwordConfirm) ||
+      validateRules.match(data.password!, data.passwordConfirm!);
     setErrors(e);
     return Object.values(e).every((val) => val === '');
   };
@@ -108,6 +111,21 @@ export default function Page() {
       {(errors as FormData).password && (
         <p className="text-sm text-red-500 mt-1">
           {(errors as FormData).password}
+        </p>
+      )}
+      <label htmlFor="passwordConfirm">Introdu parola din nou</label>
+      <input
+        type="password"
+        id="passwordConfirm"
+        className="border"
+        value={data.passwordConfirm || ''}
+        onChange={(event) => {
+          handleChange('passwordConfirm', event.target.value);
+        }}
+      />
+      {(errors as FormData).passwordConfirm && (
+        <p className="text-sm text-red-500 mt-1">
+          {(errors as FormData).passwordConfirm}
         </p>
       )}
       <button className="mt-3" onClick={validateData}>

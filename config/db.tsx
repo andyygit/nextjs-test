@@ -2,13 +2,13 @@ import { createConnection } from 'mysql2/promise';
 
 export default async function executePreparedQuery(
   query: string,
-  values: string[],
+  values?: string[],
 ) {
   let connection;
   connection = await createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: 'Parolavietii',
+    password: 'Parolamea',
     database: 'swgsite',
   });
   const [result] = await connection.execute(query, values);

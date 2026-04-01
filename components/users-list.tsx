@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Medal } from 'lucide-react';
-// import { getAllUsers } from '@/data-access/users';
+// import { getNewestUsers } from '@/data-access/tblUsers';
 
 export async function Userlist() {
-  // const users = await getAllUsers();
+  // const users = await getNewestUsers();
   // to be deleted
   const users = [
     {

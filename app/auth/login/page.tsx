@@ -21,12 +21,12 @@ const validateRules = {
         : `Trebuie sa contina minim ${limit} caractere`,
 };
 
-interface FormData {
+type FormData = {
   username?: string;
   email?: string;
   password?: string;
   passwordConfirm?: string;
-}
+};
 
 export default function Page() {
   const [data, setData] = useState<FormData>({});

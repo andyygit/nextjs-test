@@ -30,9 +30,9 @@ type FormData = {
   passwordConfirm?: string;
 };
 
-export default function Page() {
+export default async function Page() {
   const [data, setData] = useState<FormData>({});
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormData>({});
 
   // useEffect(() => {
   //   console.log('effect');
@@ -78,10 +78,8 @@ export default function Page() {
           handleChange('username', event.target.value);
         }}
       />
-      {(errors as FormData).username && (
-        <p className="text-sm text-red-500 mt-1">
-          {(errors as FormData).username}
-        </p>
+      {errors.username && (
+        <p className="text-sm text-red-500 mt-1">{errors.username}</p>
       )}
       <label htmlFor="email">Adresa ta de email</label>
       <input
@@ -93,10 +91,8 @@ export default function Page() {
           handleChange('email', event.target.value);
         }}
       />
-      {(errors as FormData).email && (
-        <p className="text-sm text-red-500 mt-1">
-          {(errors as FormData).email}
-        </p>
+      {errors.email && (
+        <p className="text-sm text-red-500 mt-1">{errors.email}</p>
       )}
       <label htmlFor="password">Alege o parola</label>
       <input
@@ -108,10 +104,8 @@ export default function Page() {
           handleChange('password', event.target.value);
         }}
       />
-      {(errors as FormData).password && (
-        <p className="text-sm text-red-500 mt-1">
-          {(errors as FormData).password}
-        </p>
+      {errors.password && (
+        <p className="text-sm text-red-500 mt-1">{errors.password}</p>
       )}
       <label htmlFor="passwordConfirm">Introdu parola din nou</label>
       <input
@@ -123,10 +117,8 @@ export default function Page() {
           handleChange('passwordConfirm', event.target.value);
         }}
       />
-      {(errors as FormData).passwordConfirm && (
-        <p className="text-sm text-red-500 mt-1">
-          {(errors as FormData).passwordConfirm}
-        </p>
+      {errors.passwordConfirm && (
+        <p className="text-sm text-red-500 mt-1">{errors.passwordConfirm}</p>
       )}
       <button className="mt-3" onClick={validateData}>
         Next

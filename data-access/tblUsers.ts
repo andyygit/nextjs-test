@@ -1,4 +1,5 @@
-import executePreparedQuery from '@/config/db';
+import 'server-only';
+import executePreparedQuery from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
 

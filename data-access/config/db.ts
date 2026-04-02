@@ -1,3 +1,4 @@
+import 'server-only';
 import { createConnection } from 'mysql2/promise';
 
 export default async function executePreparedQuery(

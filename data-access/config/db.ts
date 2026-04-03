@@ -3,7 +3,7 @@ import { createConnection } from 'mysql2/promise';
 
 export default async function executePreparedQuery(
   query: string,
-  values?: string[],
+  values?: (string | number)[],
 ) {
   let connection;
   connection = await createConnection({

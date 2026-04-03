@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { MapPin, Medal } from 'lucide-react';
 // import { getNewestUsers } from '@/data-access/tblUsers';
 
-export async function Userlist() {
+export default async function ProfilesList() {
   // const users = await getNewestUsers();
   // to be deleted
   const users = [

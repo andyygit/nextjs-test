@@ -1,14 +1,14 @@
-import { Userlist } from '@/components/users-list';
 import { Suspense } from 'react';
+import ProfilesList from '@/components/profiles-list';
 import Skeleton from '@/components/skeleton';
 
 export default async function Page() {
   return (
-    <div>
-      <h1 className="text-lg">My data fetcher</h1>
+    <>
+      <div className="text-lg">My profiles fetcher</div>
       <Suspense fallback={<Skeleton />}>
-        <Userlist />
+        <ProfilesList />
       </Suspense>
-    </div>
+    </>
   );
 }

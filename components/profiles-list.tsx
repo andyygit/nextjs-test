@@ -4,9 +4,9 @@ import { MapPin, Medal } from 'lucide-react';
 // import { getNewestUsers } from '@/data-access/tblUsers';
 
 export default async function ProfilesList() {
-  // const users = await getNewestUsers();
+  // const profiles = await getNewestUsers();
   // to be deleted
-  const users = [
+  const profiles = [
     {
       id: 1,
       imgpath: 'https://placehold.co/960x540/90a1b9/FFF',
@@ -45,13 +45,13 @@ export default async function ProfilesList() {
     },
   ];
   // ---------------
-  if (users instanceof Error) {
+  if (profiles instanceof Error) {
     return <div>Ceva nu a mers bine...</div>;
   } else {
     return (
       <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {/* {users.map(user => <div key={user.id}>{user.joinDate?.toLocaleString()}</div>)} */}
-        {users.map((user) => (
+        {/* {profiles.map(user => <div key={user.id}>{user.joinDate?.toLocaleString()}</div>)} */}
+        {profiles.map((user) => (
           <Link key={user.id} href={{ pathname: `/profiles/${user.id}` }}>
             <div className="sm:rounded-lg sm:overflow-hidden shadow-md">
               <Image

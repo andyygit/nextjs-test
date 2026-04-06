@@ -1,4 +1,5 @@
 'use server';
+
 import type { RegisterSchema } from '@/components/register-form';
 
 const validateRules = {

@@ -99,7 +99,7 @@ export default function RootLayout({
           <div className="spacer-2"></div>
           <div className="spacer-horizontal"></div>
           <div id="footer" className="row-start-3">
-            footer
+            <div className="p-4">Footer</div>
           </div>
         </div>
       </body>

@@ -9,7 +9,7 @@ export default async function Page() {
       <Suspense fallback={<Skeleton />}>
         <ProfilesList />
       </Suspense>
-      <div className="p-4">
+      <div className="mt-8">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque velit
         quam corporis tempore, esse qui eius natus praesentium dolor minus nulla
         dolore doloribus, eaque quos est commodi laudantium quia, quae deserunt

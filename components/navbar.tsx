@@ -12,12 +12,12 @@ export default function Navbar() {
     <>
       {!userSession ? (
         <>
-          <div className="flex items-center gap-6 max-md:hidden">
+          <div className="flex items-center gap-4 max-md:hidden">
             <Link
               href={{
                 pathname: '/auth/login',
               }}
-              className="shrink-0 text-sm/6 text-neutral-600 px-3 inset-ring inset-ring-neutral-600 rounded-md"
+              className="shrink-0 text-sm/6 text-neutral-600 px-3 inset-ring inset-ring-neutral-600"
             >
               Log in
             </Link>
@@ -25,7 +25,7 @@ export default function Navbar() {
               href={{
                 pathname: '/auth/register',
               }}
-              className="shrink-0 text-sm/6 text-white bg-neutral-600 px-3 inset-ring inset-ring-neutral-600 rounded-md"
+              className="shrink-0 text-sm/6 text-white bg-neutral-600 px-3 inset-ring inset-ring-neutral-600"
             >
               Register
             </Link>

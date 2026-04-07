@@ -8,7 +8,7 @@ import { MapPin, Medal } from 'lucide-react';
 export default async function ProfilesList() {
   // const profiles = await getNewestUsers();
   // to be deleted
-  await new Promise((resolve) => setTimeout(resolve, 1000)); //simulate delay
+  // await new Promise((resolve) => setTimeout(resolve, 1000)); //simulate delay
   const profiles = [
     {
       id: 1,
@@ -52,7 +52,7 @@ export default async function ProfilesList() {
     return <div>Ceva nu a mers bine...</div>;
   } else {
     return (
-      <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-4">
         {/* {profiles.map(user => <div key={user.id}>{user.joinDate?.toLocaleString()}</div>)} */}
         {profiles.map((user) => (
           <Link key={user.id} href={{ pathname: `/profiles/${user.id}` }}>

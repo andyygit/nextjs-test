@@ -1,14 +1,8 @@
 'use client';
 
+import type { RegisterSchema } from '@/helpers/types';
 import { useEffect, useState } from 'react';
 import ValidateInput from '@/actions/validate-input';
-
-export type RegisterSchema = {
-  username?: string;
-  email?: string;
-  password?: string;
-  passwordConfirm?: string;
-};
 
 export default function RegisterForm() {
   const [data, setData] = useState<RegisterSchema>({});
@@ -29,11 +23,12 @@ export default function RegisterForm() {
   };
 
   async function validate(data: RegisterSchema) {
-    setErrors(await ValidateInput(data));
+    const validateResults = await ValidateInput(JSON.stringify(data));
+    setErrors(JSON.parse(validateResults));
   }
 
   return (
-    <div className="flex flex-col p-6">
+    <div className="flex flex-col p-4">
       <label htmlFor="username">Alege un nume utilizator</label>
       <input
         type="text"

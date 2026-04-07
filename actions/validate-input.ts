@@ -1,6 +1,6 @@
 'use server';
 
-import type { RegisterSchema } from '@/components/register-form';
+import type { RegisterSchema } from '@/helpers/types';
 
 const validateRules = {
   required: (item: string | undefined): string =>
@@ -24,19 +24,22 @@ const validateRules = {
     pw1 === pw2 ? '' : 'Parolele nu coincid',
 };
 
-export default async function ValidateInput(input: RegisterSchema) {
+export default async function ValidateInput(input: string) {
+  const parsedInput = JSON.parse(input) as RegisterSchema;
   const e: RegisterSchema = {};
   e.username =
-    validateRules.required(input.username) ||
-    validateRules.minLength(5)(input.username?.trim());
+    validateRules.required(parsedInput.username) ||
+    validateRules.minLength(5)(parsedInput.username?.trim());
   e.email =
-    validateRules.required(input.email) ||
-    validateRules.validEmail(input.email?.trim());
+    validateRules.required(parsedInput.email) ||
+    validateRules.validEmail(parsedInput.email?.trim());
   e.password =
-    validateRules.required(input.password) ||
-    validateRules.minLength(8)(input.password?.trim());
+    validateRules.required(parsedInput.password) ||
+    validateRules.minLength(8)(parsedInput.password?.trim());
   e.passwordConfirm =
-    validateRules.required(input.passwordConfirm) ||
-    validateRules.match(input.password!, input.passwordConfirm!);
-  return Object.values(e).every((val) => val === '') ? {} : e;
+    validateRules.required(parsedInput.passwordConfirm) ||
+    validateRules.match(parsedInput.password!, parsedInput.passwordConfirm!);
+  return Object.values(e).every((val) => val === '')
+    ? JSON.stringify({})
+    : JSON.stringify(e);
 }

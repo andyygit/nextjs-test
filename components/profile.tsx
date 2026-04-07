@@ -51,7 +51,7 @@ export default async function Profile({ id }: { id: string }) {
       <div className="text-lg font-semibold p-4">
         This is the ID {profile.id} personal profile
       </div>
-      <div className="p-4">
+      <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
         molestias, incidunt at, eligendi blanditiis voluptate ipsum
         necessitatibus illo facilis natus nisi reprehenderit nostrum quo animi

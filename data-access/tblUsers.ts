@@ -1,17 +1,9 @@
 import 'server-only';
+
+import type { User } from '@/helpers/types';
 import executePreparedQuery from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
-
-type User = {
-  id?: number;
-  active?: number;
-  username?: string;
-  email?: number;
-  joinDate?: Date;
-  isPremium?: number;
-  hasMessages?: number;
-};
 
 export async function getUserID(id: number) {
   /**

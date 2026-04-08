@@ -7,10 +7,10 @@ export type RegisterSchema = {
 
 export type User = {
   id?: number;
-  active?: number;
+  active?: boolean;
   username?: string;
-  email?: number;
+  email?: string;
   joinDate?: Date;
-  isPremium?: number;
-  hasMessages?: number;
+  isPremium?: boolean;
+  hasMessages?: boolean;
 };

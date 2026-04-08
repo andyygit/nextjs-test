@@ -5,7 +5,7 @@ import executePreparedQuery from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
 
-export async function getUserID(id: number) {
+export async function getUserByID(id: number) {
   /**
    * Here AUTHENTICATION CHECK
    */

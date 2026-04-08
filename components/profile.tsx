@@ -1,9 +1,9 @@
 'use server';
 
-import { getUserID } from '@/data-access/tblUsers';
+import { getUserByID } from '@/data-access/tblUsers';
 
 export default async function Profile({ id }: { id: string }) {
-  // const profile = await getUserID(parseInt(userId));
+  // const profile = await getUserByID(parseInt(userId));
   // to be deleted
   // await new Promise((resolve) => setTimeout(resolve, 2000)); //simulate delay
   const profiles = [

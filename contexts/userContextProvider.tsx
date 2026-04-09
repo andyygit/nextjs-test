@@ -6,9 +6,9 @@ export const UserContext = createContext<Promise<User> | null>(null);
 export default function UserProvider({
   children,
   userPromise,
-}: {
+}: Readonly<{
   children: React.ReactNode;
   userPromise: Promise<User>;
-}) {
+}>) {
   return <UserContext value={userPromise}>{children}</UserContext>;
 }

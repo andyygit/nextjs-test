@@ -2,7 +2,7 @@
 
 import type { RegisterSchema } from '@/helpers/types';
 import { useEffect, useState } from 'react';
-import ValidateInput from '@/actions/validate-input';
+import { ValidateRegisterInput } from '@/actions/validate-input';
 
 export default function RegisterForm() {
   const [data, setData] = useState<RegisterSchema>({});
@@ -23,7 +23,7 @@ export default function RegisterForm() {
   };
 
   async function validate(data: RegisterSchema) {
-    const validateResults = await ValidateInput(JSON.stringify(data));
+    const validateResults = await ValidateRegisterInput(JSON.stringify(data));
     setErrors(JSON.parse(validateResults));
   }
 

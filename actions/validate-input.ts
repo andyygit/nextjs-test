@@ -24,7 +24,7 @@ const validateRules = {
     pw1 === pw2 ? '' : 'Parolele nu coincid',
 };
 
-export default async function ValidateInput(input: string) {
+export async function ValidateRegisterInput(input: string) {
   const parsedInput = JSON.parse(input) as RegisterSchema;
   const e: RegisterSchema = {};
   e.username =

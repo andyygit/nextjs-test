@@ -6,11 +6,12 @@ export type RegisterSchema = {
 };
 
 export type User = {
-  id?: number;
-  active?: boolean;
-  username?: string;
-  email?: string;
-  joinDate?: Date;
-  isPremium?: boolean;
-  hasMessages?: boolean;
+  id: number;
+  active: boolean;
+  username: string;
+  email: string;
+  joinDate: Date;
+  isPremium: boolean;
+  hasMessages: boolean;
+  altceva: string;
 };

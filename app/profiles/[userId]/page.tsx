@@ -10,7 +10,7 @@ export default async function Page({
   const { userId } = await params;
   return (
     <Suspense fallback={<Skeleton />}>
-      <Profile id={userId} />
+      <Profile searchID={userId} />
     </Suspense>
   );
 }

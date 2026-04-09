@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
 import { Nunito_Sans } from 'next/font/google';
 import './globals.css';
 import Logo from '@/components/logo';
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: ReactNode }>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ro">
       <body className={`${nunito.className}`}>

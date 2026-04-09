@@ -5,7 +5,7 @@ import executePreparedQuery from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
 
-export async function getUserByID(id: number) {
+export async function getUserByID(searchID: number) {
   /**
    * Here AUTHENTICATION CHECK
    */
@@ -19,7 +19,7 @@ export async function getUserByID(id: number) {
    */
   const users = await executePreparedQuery(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `id` = ?',
-    [id],
+    [searchID],
   );
   if (users instanceof Error) {
     // console.log(`USERS as error --- ${users}`);

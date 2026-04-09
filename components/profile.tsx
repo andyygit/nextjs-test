@@ -2,8 +2,8 @@
 
 import { getUserByID } from '@/data-access/tblUsers';
 
-export default async function Profile({ id }: { id: string }) {
-  // const profile = await getUserByID(parseInt(userId));
+export default async function Profile({ searchID }: { searchID: string }) {
+  // const profile = await getUserByID(parseInt(searchID));
   // to be deleted
   // await new Promise((resolve) => setTimeout(resolve, 2000)); //simulate delay
   const profiles = [
@@ -44,7 +44,7 @@ export default async function Profile({ id }: { id: string }) {
         'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis placeat quo et.',
     },
   ];
-  const profile = profiles.find((p) => p.id === parseInt(id, 10));
+  const profile = profiles.find((p) => p.id === parseInt(searchID, 10));
   // ---------------
   return profile ? (
     <>

@@ -1,5 +1,3 @@
-'use server';
-
 import { getUserByID } from '@/data-access/tblUsers';
 
 export default async function Profile({ searchID }: { searchID: string }) {

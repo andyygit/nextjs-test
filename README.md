@@ -1,7 +1,10 @@
 #### env vars
 
-token, refresh token gen salt: node: require('crypto').randomBytes(32).toString('hex')  
-used bcrypt for password salt: node: let bcrypt = require('bcryptjs'), await bcrypt.genSalt(10)
+token, refresh token gen salt: node: require('crypto').randomBytes(32).toString('hex')
+
+remove bcrypt and jose, make all auth custom
+
+reinstall @work
 
 > PORT  
 > ACCESS_TOKEN_SALT  

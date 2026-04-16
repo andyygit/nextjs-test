@@ -1,7 +1,7 @@
 import 'server-only';
 
 import type { User } from '@/helpers/types';
-import executePreparedQuery from '@/data-access/config/db';
+import { executePreparedSelect } from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
 
@@ -17,17 +17,11 @@ export async function getUserByID(searchID: number) {
   /**
    * END AUTHENTICATION CHECK
    */
-  const users = await executePreparedQuery(
+  const users = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `id` = ?',
     [searchID],
   );
-  if (users instanceof Error) {
-    // console.log(`USERS as error --- ${users}`);
-    return users as Error;
-  } else {
-    // console.log(users)
-    return users as User[];
-  }
+  return users;
 }
 
 export async function getUserLike() {
@@ -42,17 +36,11 @@ export async function getUserLike() {
   /**
    * END AUTHENTICATION CHECK
    */
-  const users = await executePreparedQuery(
+  const users = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `username` LIKE ?',
     ['%user%'],
   );
-  if (users instanceof Error) {
-    // console.log(`USERS as error --- ${users}`);
-    return users as Error;
-  } else {
-    // console.log(users)
-    return users as User[];
-  }
+  return users;
 }
 
 export async function getNewestUsers() {
@@ -67,14 +55,8 @@ export async function getNewestUsers() {
   /**
    * END AUTHENTICATION CHECK
    */
-  const users = await executePreparedQuery(
+  const users = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` ORDER BY `joinDate` DESC LIMIT 40',
   );
-  if (users instanceof Error) {
-    // console.log(`USERS as error --- ${users}`);
-    return users as Error;
-  } else {
-    // console.log(users)
-    return users as User[];
-  }
+  return users;
 }

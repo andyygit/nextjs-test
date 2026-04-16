@@ -1,23 +1,68 @@
 import 'server-only';
-import { createConnection } from 'mysql2/promise';
+// import { cacheLife } from 'next/cache';
+import {
+  createConnection,
+  ExecuteValues,
+  ResultSetHeader,
+  RowDataPacket,
+} from 'mysql2/promise';
 
-export default async function executePreparedQuery(
-  query: string,
-  values?: (string | number)[],
-) {
-  let connection;
-  connection = await createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'Parolamea',
-    database: 'swgsite',
-  });
-  const [result] = await connection.execute(query, values);
-  if (result instanceof Error) {
-    console.error(result as Error);
-    if (connection) connection.end();
-    return result as Error;
-  }
-  if (connection) connection.end();
-  return result;
+const createConnectionOptions = {
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DB,
+};
+
+interface User extends RowDataPacket {
+  id: number;
+  username: string;
+  email: string;
+  isPremium: number;
+  hasMessages: number;
 }
+
+async function executePreparedInsert(sql: string, values: ExecuteValues) {
+  let connection;
+  connection = await createConnection(createConnectionOptions);
+  const [inserted] = await connection.execute<ResultSetHeader>(sql, values);
+  if (connection) connection.end();
+  return inserted.affectedRows;
+}
+
+async function executePreparedSelect(sql: string, values?: ExecuteValues) {
+  // 'use cache';
+  // cacheLife({
+  //   stale: 300, //cache on client
+  //   revalidate: 900, //cache on server
+  //   expire: 1800, //fresh data after no traffic period
+  // });
+  let connection;
+  connection = await createConnection(createConnectionOptions);
+  const [users] = await connection.execute<User[]>(sql, values);
+  if (connection) connection.end();
+  return users;
+}
+
+async function executePreparedUpdate(sql: string, values: ExecuteValues) {
+  let connection;
+  connection = await createConnection(createConnectionOptions);
+  const [updated] = await connection.execute<ResultSetHeader>(sql, values);
+  if (connection) connection.end();
+  return updated.affectedRows;
+}
+
+async function executePreparedDelete(sql: string, values: ExecuteValues) {
+  let connection;
+  connection = await createConnection(createConnectionOptions);
+  const [deleted] = await connection.execute<ResultSetHeader>(sql, values);
+  if (connection) connection.end();
+  return deleted.affectedRows;
+}
+
+export {
+  executePreparedInsert,
+  executePreparedSelect,
+  executePreparedUpdate,
+  executePreparedDelete,
+};

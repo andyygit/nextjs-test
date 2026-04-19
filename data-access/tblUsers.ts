@@ -1,9 +1,18 @@
 import 'server-only';
 
 import type { User } from '@/helpers/types';
-import { executePreparedSelect } from '@/data-access/config/db';
+import {
+  executePreparedInsert,
+  executePreparedSelect,
+} from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
+
+export async function insertNewUser(userdata) {
+  //TODO type
+  const insertedUser = executePreparedInsert('', userdata); //todo
+  return insertNewUser;
+}
 
 export async function getUserByID(searchID: number) {
   /**
@@ -17,11 +26,11 @@ export async function getUserByID(searchID: number) {
   /**
    * END AUTHENTICATION CHECK
    */
-  const users = await executePreparedSelect(
+  const user = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `id` = ?',
     [searchID],
   );
-  return users;
+  return user;
 }
 
 export async function getUserLike() {
@@ -59,4 +68,23 @@ export async function getNewestUsers() {
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` ORDER BY `joinDate` DESC LIMIT 40',
   );
   return users;
+}
+
+export async function getUserSession(sessionID: string) {
+  /**
+   * Here AUTHENTICATION CHECK
+   */
+  // const { isAuthenticated } = getKindeServerSession();
+  // if (await isAuthenticated()) {
+  if (!true) {
+    redirect('/auth/login'); //use proxy with NextResponse.redirect
+  }
+  /**
+   * END AUTHENTICATION CHECK
+   */
+  const userSession = await executePreparedSelect(
+    'SELECT `user_id` FROM `sessions` WHERE `session_id` = ?',
+    [sessionID],
+  );
+  return userSession;
 }

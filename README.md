@@ -2,9 +2,8 @@
 
 token, refresh token gen salt: node: require('crypto').randomBytes(32).toString('hex')
 
-remove bcrypt and jose, make all auth custom
-
-reinstall @work
+remove all useState, useEffect, create and import signals instead.
+https://www.youtube.com/watch?v=SO8lBVWF2Y8
 
 > PORT  
 > ACCESS_TOKEN_SALT  

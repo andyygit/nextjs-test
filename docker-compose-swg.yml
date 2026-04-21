@@ -1,26 +1,40 @@
 services:
   swg-mysql:
-    container_name: swg-mysql
     image: mysql
+    container_name: swg-mysql
+    hostname: swg-mysql-host
     networks:
       - swg-network
     volumes:
       - db_data_swg_mysql:/var/lib/mysql
     ports:
-      - '3306:3306/tcp'
+      - 127.0.0.1:3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=PPPPPPPPP
       - TZ=Europe/Bucharest
     restart: always
   swg-redis:
-    container_name: swg-redis
     image: redis
+    container_name: swg-redis
+    hostname: swg-redis-host
     networks:
       - swg-network
     volumes:
       - db_data_swg_redis:/data
     ports:
-      - '6379:6379'
+      - '127.0.0.1:6379:6379'
+    restart: always
+  swg-phpmyadmin:
+    image: phpmyadmin
+    container_name: swg-phpmyadmin
+    hostname: swg-phpmyadmin-host
+    networks:
+      - swg-network
+    ports:
+      - 127.0.0.1:8080:80
+    environment:
+      - UPLOAD_LIMIT=4096K
+      - PMA_ARBITRARY=1
     restart: always
 networks:
   swg-network:

@@ -1,0 +1,35 @@
+services:
+  swg-mysql:
+    container_name: swg-mysql
+    image: mysql
+    networks:
+      - swg-network
+    volumes:
+      - db_data_swg_mysql:/var/lib/mysql
+    ports:
+      - '3306:3306/tcp'
+    environment:
+      - MYSQL_ROOT_PASSWORD=PPPPPPPPP
+      - TZ=Europe/Bucharest
+    restart: always
+  swg-redis:
+    container_name: swg-redis
+    image: redis
+    networks:
+      - swg-network
+    volumes:
+      - db_data_swg_redis:/data
+    ports:
+      - '6379:6379'
+    restart: always
+networks:
+  swg-network:
+    name: swg-main-network
+    driver: bridge
+volumes:
+  db_data_swg_mysql:
+    name: swg-mysql-data
+    driver: local
+  db_data_swg_redis:
+    name: swg-redis-data
+    driver: local

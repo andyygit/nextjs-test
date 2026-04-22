@@ -21,3 +21,5 @@ export type User = {
   hasMessages: boolean;
   altceva: string;
 };
+
+export type SessionSchema = Pick<User, 'id' | 'isPremium'>;

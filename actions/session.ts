@@ -7,11 +7,21 @@ import {
   SESSION_EXPIRATION_SECONDS,
   COOKIE_SESSION_KEY,
 } from '@/helpers/constants';
+import { redisClient } from '@/redis/redis';
+import { SessionSchema } from '@/helpers/types';
 
-export async function createUserSession(user) {
+export async function createUserSession(user: SessionSchema) {
   const sessionId = crypto.randomBytes(512).toString('hex').normalize();
-  //todo store session in database //redis option?
-  SESSION_EXPIRATION_SECONDS; //use session expiration in db// how to delete???
+
+  const redis = await redisClient.connect();
+  await redis.set(`session:${sessionId}`, JSON.stringify(user), {
+    expiration: {
+      type: 'EX',
+      value: SESSION_EXPIRATION_SECONDS,
+    },
+  });
+  redis.destroy();
+
   const cookieStore = await cookies();
   cookieStore.set({
     name: COOKIE_SESSION_KEY,

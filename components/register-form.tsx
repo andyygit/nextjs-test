@@ -1,8 +1,9 @@
 'use client';
 
-import type { RegisterSchema } from '@/helpers/types';
 import { useEffect, useState } from 'react';
+import type { RegisterSchema } from '@/helpers/types';
 import { ValidateRegisterInput } from '@/actions/validate-input';
+import { SignUp } from '@/actions/auth';
 
 export default function RegisterForm() {
   const [data, setData] = useState<RegisterSchema>({});
@@ -24,7 +25,12 @@ export default function RegisterForm() {
 
   async function validate(data: RegisterSchema) {
     const validateResults = await ValidateRegisterInput(JSON.stringify(data));
-    setErrors(JSON.parse(validateResults));
+    const parsedValidateResults = JSON.parse(validateResults);
+    if (Object.keys(parsedValidateResults).length > 0) {
+      setErrors(parsedValidateResults);
+    } else {
+      SignUp(data);
+    }
   }
 
   return (

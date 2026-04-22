@@ -14,7 +14,7 @@ services:
       - TZ=Europe/Bucharest
     restart: always
   swg-redis:
-    image: redis
+    image: redis:8.0.6
     container_name: swg-redis
     hostname: swg-redis-host
     networks:

@@ -5,6 +5,12 @@ export type RegisterSchema = {
   passwordConfirm?: string;
 };
 
+export type SignupRegisterSchema = Required<
+  Omit<RegisterSchema, 'passwordConfirm'>
+> & {
+  salt: string;
+};
+
 export type User = {
   id: number;
   active: boolean;

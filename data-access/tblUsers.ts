@@ -1,6 +1,6 @@
 import 'server-only';
 
-import type { User } from '@/helpers/types';
+import type { SignupRegisterSchema } from '@/helpers/types';
 import {
   executePreparedInsert,
   executePreparedSelect,
@@ -8,9 +8,12 @@ import {
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
 
-export async function insertNewUser(userdata) {
-  //TODO type
-  const insertedUser = executePreparedInsert('', userdata); //todo
+export async function insertNewUser(userdata: SignupRegisterSchema) {
+  const { username, password, salt, email } = userdata;
+  const insertNewUser = executePreparedInsert(
+    'INSERT INTO `users` (`username`, `password`, `salt`, `email`) VALUES(?, ?, ?, ?)',
+    [username, password, salt, email],
+  );
   return insertNewUser;
 }
 
@@ -29,6 +32,44 @@ export async function getUserByID(searchID: number) {
   const user = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `id` = ?',
     [searchID],
+  );
+  return user;
+}
+
+export async function getUserByUsername(searchName: string) {
+  /**
+   * Here AUTHENTICATION CHECK
+   */
+  // const { isAuthenticated } = getKindeServerSession();
+  // if (await isAuthenticated()) {
+  if (!true) {
+    redirect('/auth/login'); //use proxy with NextResponse.redirect
+  }
+  /**
+   * END AUTHENTICATION CHECK
+   */
+  const user = await executePreparedSelect(
+    'SELECT `id` FROM `users` WHERE `username` = ?',
+    [searchName],
+  );
+  return user;
+}
+
+export async function getUserByEmail(searchEmail: string) {
+  /**
+   * Here AUTHENTICATION CHECK
+   */
+  // const { isAuthenticated } = getKindeServerSession();
+  // if (await isAuthenticated()) {
+  if (!true) {
+    redirect('/auth/login'); //use proxy with NextResponse.redirect
+  }
+  /**
+   * END AUTHENTICATION CHECK
+   */
+  const user = await executePreparedSelect(
+    'SELECT `id` FROM `users` WHERE `email` = ?',
+    [searchEmail],
   );
   return user;
 }

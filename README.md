@@ -3,10 +3,9 @@
 token, refresh token gen salt: node: require('crypto').randomBytes(32).toString('hex')
 
 remove all useState, useEffect, create and import signals instead.
+remove context aswell !?
 https://www.youtube.com/watch?v=SO8lBVWF2Y8
 
-implement mysql + redis docker containers
-set pwd for mysql docker in docker-compose-swg.yml
 docker-compose -f .\docker-compose-swg.yml up -d
 
 docker exec -it swg-redis /bin/bash

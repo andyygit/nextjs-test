@@ -2,7 +2,10 @@
 
 import crypto from 'crypto';
 
-export function HashPassword(password: string, salt: string): Promise<string> {
+export async function HashPassword(
+  password: string,
+  salt: string,
+): Promise<string> {
   return new Promise((resolve, reject) => {
     crypto.scrypt(password.normalize(), salt, 64, (error, hash) => {
       if (error) reject('Eroare procesare parola');
@@ -11,6 +14,6 @@ export function HashPassword(password: string, salt: string): Promise<string> {
   });
 }
 
-export function GenerateSalt() {
+export async function GenerateSalt() {
   return crypto.randomBytes(16).toString('hex').normalize(); //32 caractere
 }

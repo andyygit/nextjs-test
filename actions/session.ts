@@ -3,11 +3,11 @@
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 import { getUserByID, getUserSession } from '@/data-access/tblUsers';
+import { redisClient } from '@/redis/redis';
 import {
   SESSION_EXPIRATION_SECONDS,
   COOKIE_SESSION_KEY,
 } from '@/helpers/constants';
-import { redisClient } from '@/redis/redis';
 import { SessionSchema } from '@/helpers/types';
 
 export async function createUserSession(user: SessionSchema) {
@@ -25,7 +25,7 @@ export async function createUserSession(user: SessionSchema) {
   const cookieStore = await cookies();
   cookieStore.set({
     name: COOKIE_SESSION_KEY,
-    value: 'crapu',
+    value: `${sessionId}`,
     secure: true,
     httpOnly: true,
     sameSite: 'strict',

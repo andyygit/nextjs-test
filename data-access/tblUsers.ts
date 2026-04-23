@@ -1,19 +1,20 @@
 import 'server-only';
 
-import type { SignupRegisterSchema } from '@/helpers/types';
 import {
   executePreparedInsert,
   executePreparedSelect,
 } from '@/data-access/config/db';
 // import { getKindeServerSession } from '@/config/auth';
 import { redirect } from 'next/navigation';
+import type { SignupRegisterSchema } from '@/helpers/types';
 
 export async function insertNewUser(userdata: SignupRegisterSchema) {
   const { username, password, salt, email } = userdata;
-  const insertNewUser = executePreparedInsert(
+  const insertNewUser = await executePreparedInsert(
     'INSERT INTO `users` (`username`, `password`, `salt`, `email`) VALUES(?, ?, ?, ?)',
     [username, password, salt, email],
   );
+  console.log(insertNewUser);
   return insertNewUser;
 }
 
@@ -49,7 +50,7 @@ export async function getUserByUsername(searchName: string) {
    * END AUTHENTICATION CHECK
    */
   const user = await executePreparedSelect(
-    'SELECT `id` FROM `users` WHERE `username` = ?',
+    'SELECT `id`, `isPremium` FROM `users` WHERE `username` = ?',
     [searchName],
   );
   return user;
@@ -74,7 +75,7 @@ export async function getUserByEmail(searchEmail: string) {
   return user;
 }
 
-export async function getUserLike() {
+export async function getUserLike(namelike: string) {
   /**
    * Here AUTHENTICATION CHECK
    */
@@ -88,7 +89,7 @@ export async function getUserLike() {
    */
   const users = await executePreparedSelect(
     'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `username` LIKE ?',
-    ['%user%'],
+    [`%${namelike}}%`],
   );
   return users;
 }

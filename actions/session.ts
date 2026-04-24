@@ -2,7 +2,6 @@
 
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
-import { getUserByID, getUserSession } from '@/data-access/tblUsers';
 import { redisClient } from '@/redis/redis';
 import {
   SESSION_EXPIRATION_SECONDS,
@@ -38,10 +37,7 @@ export async function getUserFromSession() {
   const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
   if (sessionId == null) return null;
 
-  const session = await getUserSession(sessionId);
-  if (session.length) {
-    return await getUserByID(session[0].id);
-  } else {
-    return null;
-  }
+  const redis = await redisClient.connect();
+  const rawUser = await redis.get(`session:${sessionId}`);
+  return rawUser ? rawUser : null;
 }

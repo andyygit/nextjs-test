@@ -111,22 +111,3 @@ export async function getNewestUsers() {
   );
   return users;
 }
-
-export async function getUserSession(sessionID: string) {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login'); //use proxy with NextResponse.redirect
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
-  const userSession = await executePreparedSelect(
-    'SELECT `user_id` FROM `sessions` WHERE `session_id` = ?',
-    [sessionID],
-  );
-  return userSession;
-}

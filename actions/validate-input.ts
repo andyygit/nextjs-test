@@ -1,7 +1,7 @@
 'use server';
 
 import { getUserByEmail, getUserByUsername } from '@/data-access/tblUsers';
-import type { RegisterSchema } from '@/helpers/types';
+import type { RegisterSchema, LoginSchema } from '@/helpers/types';
 
 const validateRules = {
   required: (item: string | undefined): string =>
@@ -48,6 +48,16 @@ export async function ValidateRegisterInput(input: string) {
   e.passwordConfirm =
     validateRules.required(parsedInput.passwordConfirm) ||
     validateRules.match(parsedInput.password!, parsedInput.passwordConfirm!);
+  return Object.values(e).every((val) => val === '')
+    ? JSON.stringify({})
+    : JSON.stringify(e);
+}
+
+export async function ValidateLoginInput(input: string) {
+  const parsedInput = JSON.parse(input) as LoginSchema;
+  const e: LoginSchema = {};
+  e.username = validateRules.required(parsedInput.username);
+  e.password = validateRules.required(parsedInput.password);
   return Object.values(e).every((val) => val === '')
     ? JSON.stringify({})
     : JSON.stringify(e);

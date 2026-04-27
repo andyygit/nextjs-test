@@ -4,9 +4,8 @@ import {
   executePreparedInsert,
   executePreparedSelect,
 } from '@/data-access/config/db';
-// import { getKindeServerSession } from '@/config/auth';
-import { redirect } from 'next/navigation';
 import type { SignupRegisterSchema } from '@/helpers/types';
+import type { RowDataPacket } from 'mysql2';
 
 export async function insertNewUser(userdata: SignupRegisterSchema) {
   const { username, password, salt, email } = userdata;
@@ -18,96 +17,40 @@ export async function insertNewUser(userdata: SignupRegisterSchema) {
   return insertNewUser;
 }
 
-export async function getUserByID(searchID: number) {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login'); //use proxy with NextResponse.redirect
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
-  const user = await executePreparedSelect(
-    'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `id` = ?',
-    [searchID],
-  );
-  return user;
-}
+type UserByEmail = RowDataPacket & {
+  id: number;
+};
+type UserByUsername = UserByEmail & {
+  isPremium: number;
+};
+type UserWithPassword = UserByUsername & {
+  password: string;
+  salt: string;
+};
 
 export async function getUserByUsername(searchName: string) {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login'); //use proxy with NextResponse.redirect
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
+  // Unprotected for login, register, check pass and validate
   const user = await executePreparedSelect(
     'SELECT `id`, `isPremium` FROM `users` WHERE `username` = ?',
     [searchName],
   );
-  return user;
+  return user as UserByUsername[];
 }
 
 export async function getUserByEmail(searchEmail: string) {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login'); //use proxy with NextResponse.redirect
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
+  // Unprotected for login, register, check pass and validate
   const user = await executePreparedSelect(
     'SELECT `id` FROM `users` WHERE `email` = ?',
     [searchEmail],
   );
-  return user;
+  return user as UserByEmail[];
 }
 
-export async function getUserLike(namelike: string) {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login'); //use proxy with NextResponse.redirect
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
-  const users = await executePreparedSelect(
-    'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` WHERE `username` LIKE ?',
-    [`%${namelike}}%`],
+export async function getUserWithPassword(searchName: string) {
+  // Unprotected for login, register, check pass and validate
+  const user = await executePreparedSelect(
+    'SELECT `id`, `password`, `salt` FROM `users` WHERE `username` = ?',
+    [searchName],
   );
-  return users;
-}
-
-export async function getNewestUsers() {
-  /**
-   * Here AUTHENTICATION CHECK
-   */
-  // const { isAuthenticated } = getKindeServerSession();
-  // if (await isAuthenticated()) {
-  if (!true) {
-    redirect('/auth/login');
-  }
-  /**
-   * END AUTHENTICATION CHECK
-   */
-  const users = await executePreparedSelect(
-    'SELECT `id`, `active`, `username`, `email`, `joinDate`, `isPremium`, `hasMessages` FROM `users` ORDER BY `joinDate` DESC LIMIT 40',
-  );
-  return users;
+  return user as UserWithPassword[];
 }

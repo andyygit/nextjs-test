@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ValidateRegisterInput } from '@/actions/validate-input';
-import { SignUp } from '@/actions/auth';
-import type { RegisterSchema } from '@/helpers/types';
+import { ValidateLoginInput } from '@/actions/validate-input';
+import { LogIn } from '@/actions/auth';
+import type { LoginSchema } from '@/helpers/types';
 
-export default function RegisterForm() {
-  const [data, setData] = useState<RegisterSchema>({});
-  const [errors, setErrors] = useState<RegisterSchema>({});
+export default function LoginForm() {
+  const [data, setData] = useState<LoginSchema>({});
+  const [errors, setErrors] = useState<LoginSchema>({});
 
   // useEffect(() => {
   //   console.log('effect');
@@ -23,19 +23,19 @@ export default function RegisterForm() {
     setErrors((e) => ({ ...e, [key]: '' }));
   };
 
-  async function validate(data: RegisterSchema) {
-    const validateResults = await ValidateRegisterInput(JSON.stringify(data));
+  async function validate(data: LoginSchema) {
+    const validateResults = await ValidateLoginInput(JSON.stringify(data));
     const parsedValidateResults = JSON.parse(validateResults);
     if (Object.keys(parsedValidateResults).length > 0) {
       setErrors(parsedValidateResults);
     } else {
-      await SignUp(JSON.stringify(data));
+      await LogIn(JSON.stringify(data));
     }
   }
 
   return (
     <div className="flex flex-col p-4">
-      <label htmlFor="username">Alege un nume utilizator</label>
+      <label htmlFor="username">Utilizator</label>
       <input
         type="text"
         id="username"
@@ -47,19 +47,6 @@ export default function RegisterForm() {
       />
       {errors.username && (
         <p className="text-sm text-red-500 mt-1">{errors.username}</p>
-      )}
-      <label htmlFor="email">Adresa ta de email</label>
-      <input
-        type="email"
-        id="email"
-        className="border"
-        value={data.email || ''}
-        onChange={(event) => {
-          handleChange('email', event.target.value);
-        }}
-      />
-      {errors.email && (
-        <p className="text-sm text-red-500 mt-1">{errors.email}</p>
       )}
       <label htmlFor="password">Alege o parola</label>
       <input
@@ -73,19 +60,6 @@ export default function RegisterForm() {
       />
       {errors.password && (
         <p className="text-sm text-red-500 mt-1">{errors.password}</p>
-      )}
-      <label htmlFor="passwordConfirm">Introdu parola din nou</label>
-      <input
-        type="password"
-        id="passwordConfirm"
-        className="border"
-        value={data.passwordConfirm || ''}
-        onChange={(event) => {
-          handleChange('passwordConfirm', event.target.value);
-        }}
-      />
-      {errors.passwordConfirm && (
-        <p className="text-sm text-red-500 mt-1">{errors.passwordConfirm}</p>
       )}
       <button className="mt-3" onClick={async () => await validate(data)}>
         Next

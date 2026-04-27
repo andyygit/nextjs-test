@@ -1,6 +1,7 @@
 'use server';
 
 import crypto from 'crypto';
+import { buffer } from 'stream/consumers';
 
 export async function HashPassword(
   password: string,
@@ -16,4 +17,20 @@ export async function HashPassword(
 
 export async function GenerateSalt() {
   return crypto.randomBytes(16).toString('hex').normalize(); //32 caractere
+}
+
+export async function comparePassords({
+  password,
+  salt,
+  hashedPassword,
+}: {
+  password: string;
+  salt: string;
+  hashedPassword: string;
+}) {
+  const inputHashedPassword = await HashPassword(password, salt);
+  return crypto.timingSafeEqual(
+    Buffer.from(inputHashedPassword, 'hex'),
+    Buffer.from(hashedPassword, 'hex'),
+  );
 }

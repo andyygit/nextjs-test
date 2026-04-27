@@ -14,13 +14,10 @@ const createConnectionOptions = {
   database: process.env.MYSQL_DB,
 };
 
-interface User extends RowDataPacket {
-  id: number;
-  username: string;
-  email: string;
-  isPremium: number;
-  hasMessages: number;
-}
+// interface User extends RowDataPacket {
+//   id: number;
+//   isPremium: number;
+// }
 
 async function executePreparedInsert(sql: string, values: ExecuteValues) {
   let connection;
@@ -39,9 +36,9 @@ async function executePreparedSelect(sql: string, values?: ExecuteValues) {
   // });
   let connection;
   connection = await createConnection(createConnectionOptions);
-  const [users] = await connection.execute<User[]>(sql, values);
+  const [results] = await connection.execute<RowDataPacket[]>(sql, values);
   if (connection) connection.end();
-  return users;
+  return results;
 }
 
 async function executePreparedUpdate(sql: string, values: ExecuteValues) {

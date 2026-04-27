@@ -1,10 +1,18 @@
 'use server';
 
-import { getUserByUsername, insertNewUser } from '@/data-access/tblUsers';
-import { GenerateSalt, HashPassword } from './hash-password';
-import { createUserSession } from './session';
+import {
+  getUserByUsername,
+  getUserWithPassword,
+  insertNewUser,
+} from '@/data-access/tblUsers';
+import { comparePassords, GenerateSalt, HashPassword } from './hash-password';
+import { createUserSession, removeUserSession } from './session';
 import { redirect } from 'next/navigation';
-import { RegisterSchema, SignupRegisterSchema } from '@/helpers/types';
+import type {
+  LoginSchema,
+  RegisterSchema,
+  SignupRegisterSchema,
+} from '@/helpers/types';
 
 export async function SignUp(signupData: string) {
   const parsedSignupData = JSON.parse(signupData) as RegisterSchema;
@@ -36,6 +44,27 @@ export async function SignUp(signupData: string) {
   redirect('/');
 }
 
-export async function LogIn() {}
+export async function LogIn(loginData: string) {
+  const parsedSignupData = JSON.parse(loginData) as LoginSchema;
+  const loginUser = await getUserWithPassword(parsedSignupData.username!);
+  if (loginUser.length == 0) return 'User inexistent';
 
-export async function LogOut() {}
+  const isCorrectPassword = await comparePassords({
+    password: parsedSignupData.password!,
+    salt: loginUser[0].salt,
+    hashedPassword: loginUser[0].password,
+  });
+
+  if (!isCorrectPassword) return 'Login incorect';
+
+  await createUserSession({
+    id: loginUser[0].id,
+    isPremium: loginUser[0].isPremium == 1 ? true : false,
+  });
+  redirect('/');
+}
+
+export async function LogOut() {
+  await removeUserSession();
+  redirect('/');
+}

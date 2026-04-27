@@ -64,12 +64,17 @@ export default function Navbar() {
             </Link>
             <Link
               href={{
-                // pathname: '/my-profile',
-                pathname: '/profiles',
+                pathname: '/my-profile',
               }}
               className="text-sm/6 text-gray-950"
             >
               {userSession.fullName}
+            </Link>
+            <Link
+              href={{ pathname: '/profiles' }}
+              className="text-sm/6 text-gray-950"
+            >
+              Profile aleatoare
             </Link>
             <Link
               href={{ pathname: '/inbox' }}
@@ -86,7 +91,7 @@ export default function Navbar() {
               <span>Mesaje</span>
             </Link>
             <Link
-              href={{ pathname: '/favourites' }}
+              href={{ pathname: '/favorites' }}
               className="text-sm/6 text-gray-950"
             >
               Favoriti

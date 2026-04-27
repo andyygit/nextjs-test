@@ -5,6 +5,8 @@ export type RegisterSchema = {
   passwordConfirm?: string;
 };
 
+export type LoginSchema = Omit<RegisterSchema, 'email' | 'passwordConfirm'>;
+
 export type SignupRegisterSchema = Required<
   Omit<RegisterSchema, 'passwordConfirm'>
 > & {

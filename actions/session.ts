@@ -32,12 +32,25 @@ export async function createUserSession(user: SessionSchema) {
   });
 }
 
-export async function getUserFromSession() {
+export async function getCurrentUserSession(): Promise<SessionSchema | null> {
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
   if (sessionId == null) return null;
 
   const redis = await redisClient.connect();
   const rawUser = await redis.get(`session:${sessionId}`);
-  return rawUser ? rawUser : null;
+  redis.destroy();
+  return rawUser ? (JSON.parse(rawUser) as SessionSchema) : null;
+}
+
+export async function removeUserSession() {
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
+  if (sessionId == null) return null;
+
+  const redis = await redisClient.connect();
+  await redis.del(`session:${sessionId}`);
+  redis.destroy();
+
+  cookieStore.delete(COOKIE_SESSION_KEY);
 }

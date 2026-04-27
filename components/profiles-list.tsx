@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Medal } from 'lucide-react';
-// import { getNewestUsers } from '@/data-access/tblUsers';
+// import { getNewestProfiles } from '@/data-access/tblProfiles';
 
 export default async function ProfilesList() {
-  // const profiles = await getNewestUsers();
+  // const profiles = await getNewestProfiles();
   // to be deleted
   // await new Promise((resolve) => setTimeout(resolve, 1000)); //simulate delay
   const profiles = [

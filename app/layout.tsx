@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Nunito_Sans } from 'next/font/google';
 import './globals.css';
-import Logo from '@/components/logo';
-import Navbar from '@/components/navbar';
-import Breadcrumb from '@/components/breadcrumb';
-import Sidebar from '@/components/sidebar';
-import Footer from '@/components/footer';
+import Logo from '@/components/ui/logo';
+import Navbar from '@/components/ui/navbar';
+import Breadcrumb from '@/components/ui/breadcrumb';
+import Sidebar from '@/components/ui/sidebar';
+import Footer from '@/components/ui/footer';
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -35,7 +35,7 @@ export default function RootLayout({
         </div>
         <div
           id="wrapper"
-          className="grid min-h-dvh grid-cols-1 grid-rows-[1fr_1px_auto_1px_auto] pt-26.25 lg:grid-cols-[auto_2.5rem_minmax(0,1fr)_2.5rem] lg:pt-14.25"
+          className="grid min-h-dvh grid-cols-1 grid-rows-[1fr_1px_auto_1px_auto] pt-26.25 lg:grid-cols-[auto_2.5rem_minmax(0,1fr)_2.5rem] max-lg:pt-14.25"
         >
           <Sidebar />
           <div className="spacer-1"></div>

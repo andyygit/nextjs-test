@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { Search, UserRound, UserRoundPen, Inbox } from 'lucide-react';
+import {
+  Search,
+  UserRound,
+  UserRoundPen,
+  Inbox,
+  CircleQuestionMark,
+} from 'lucide-react';
 
 export default function Navbar() {
   // const userSession: {} | false = false;
@@ -12,7 +18,7 @@ export default function Navbar() {
     <>
       {!userSession ? (
         <>
-          <div className="flex items-center gap-4 max-md:hidden">
+          <div className="flex items-center gap-4 max-md:hidden font-semibold">
             <Link
               href={{
                 pathname: '/auth/login',
@@ -51,34 +57,24 @@ export default function Navbar() {
         </>
       ) : (
         <>
-          <div className="flex items-center gap-6 max-md:hidden">
-            <Link
-              href={{
-                pathname: '/search',
-                query: { name: 'test' },
-              }}
-              className="inline-flex items-center gap-1 rounded-full bg-gray-950/2 px-2 py-1 inset-ring inset-ring-gray-950/8"
-            >
-              <Search />
-              <kbd className="font-sans text-xs/4 text-gray-500">Cautare</kbd>
-            </Link>
+          <div className="flex items-center gap-6 max-md:hidden font-semibold">
             <Link
               href={{
                 pathname: '/my-profile',
               }}
-              className="text-sm/6 text-gray-950"
+              className="text-sm/6 text-gray-950 shrink-0"
             >
               {userSession.fullName}
             </Link>
             <Link
               href={{ pathname: '/profiles' }}
-              className="text-sm/6 text-gray-950"
+              className="text-sm/6 text-gray-950 shrink-0"
             >
               Profile aleatoare
             </Link>
             <Link
               href={{ pathname: '/inbox' }}
-              className="flex items-center gap-1 text-sm/6 text-gray-950"
+              className="flex items-center gap-1 text-sm/6 text-gray-950 shrink-0"
             >
               {userSession.hasMessages ? (
                 <span className="relative flex size-2">
@@ -92,19 +88,21 @@ export default function Navbar() {
             </Link>
             <Link
               href={{ pathname: '/favorites' }}
-              className="text-sm/6 text-gray-950"
+              className="text-sm/6 text-gray-950 shrink-0"
             >
               Favoriti
             </Link>
             <Link
-              href={{ pathname: 'help' }}
-              className="text-sm/6 text-gray-950"
+              href={{
+                pathname: '/help',
+              }}
+              className="inline-grid size-6 place-items-center"
             >
-              Ajutor
+              <CircleQuestionMark strokeWidth={1.5} />
             </Link>
             <Link
               href={{ pathname: '/premium' }}
-              className="group relative px-1.5 text-sm/6 text-indigo-800"
+              className="group relative px-1.5 text-sm/6 text-indigo-800 shrink-0"
             >
               <span className="absolute inset-0 border border-dashed border-indigo-300/60 bg-indigo-400/10 group-hover:bg-indigo-400/15"></span>
               Premium
@@ -172,6 +170,14 @@ export default function Navbar() {
               ) : (
                 ''
               )}
+            </Link>
+            <Link
+              href={{
+                pathname: '/help',
+              }}
+              className="inline-grid size-6 place-items-center"
+            >
+              <CircleQuestionMark />
             </Link>
           </div>
         </>

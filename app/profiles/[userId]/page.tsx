@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Skeleton from '@/components/skeleton';
+import Skeleton from '@/components/ui/skeleton';
 import Profile from '@/components/profile';
 
 async function SuspendedComponent({

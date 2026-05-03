@@ -1,13 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { ValidateLoginInput } from '@/actions/validate-input';
 import { LogIn } from '@/actions/auth';
+import { useRouter } from 'next/navigation';
+import Alert from './ui/alert';
+import FormBody from './ui/form/form-body';
+import BasicInput from './ui/form/input';
+import FormDivider from './ui/form/form-divider';
 import type { LoginSchema } from '@/helpers/types';
 
 export default function LoginForm() {
+  const router = useRouter();
   const [data, setData] = useState<LoginSchema>({});
   const [errors, setErrors] = useState<LoginSchema>({});
+  const [loginerror, setLoginerror] = useState('');
 
   // useEffect(() => {
   //   console.log('effect');
@@ -23,47 +31,73 @@ export default function LoginForm() {
     setErrors((e) => ({ ...e, [key]: '' }));
   };
 
-  async function validate(data: LoginSchema) {
+  async function validateAndLogin(data: LoginSchema) {
     const validateResults = await ValidateLoginInput(JSON.stringify(data));
     const parsedValidateResults = JSON.parse(validateResults);
     if (Object.keys(parsedValidateResults).length > 0) {
       setErrors(parsedValidateResults);
-    } else {
-      await LogIn(JSON.stringify(data));
+      return;
     }
+    const loginStatusText = await LogIn(JSON.stringify(data));
+    if (loginStatusText.length) {
+      setLoginerror(loginStatusText);
+      return;
+    }
+    router.push('/');
   }
 
   return (
-    <div className="flex flex-col p-4">
-      <label htmlFor="username">Utilizator</label>
-      <input
+    <FormBody>
+      {loginerror && <Alert type="danger" message={loginerror} />}
+      <BasicInput
         type="text"
-        id="username"
-        className="border"
+        label="Utilizator"
+        inputName="username"
+        iconPrefix="@"
+        inputPlaceholder="user"
         value={data.username || ''}
-        onChange={(event) => {
-          handleChange('username', event.target.value);
-        }}
-      />
-      {errors.username && (
-        <p className="text-sm text-red-500 mt-1">{errors.username}</p>
-      )}
-      <label htmlFor="password">Alege o parola</label>
-      <input
+        onInputChange={handleChange}
+      >
+        {errors.username && (
+          <p className="text-sm text-red-500 mt-1">{errors.username}</p>
+        )}
+      </BasicInput>
+      <BasicInput
         type="password"
-        id="password"
-        className="border"
+        label="Parola"
+        inputName="password"
+        inputPlaceholder="******"
         value={data.password || ''}
-        onChange={(event) => {
-          handleChange('password', event.target.value);
-        }}
-      />
-      {errors.password && (
-        <p className="text-sm text-red-500 mt-1">{errors.password}</p>
-      )}
-      <button className="mt-3" onClick={async () => await validate(data)}>
-        Next
-      </button>
-    </div>
+        onInputChange={handleChange}
+      >
+        {errors.password && (
+          <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+        )}
+      </BasicInput>
+      <div className="col-span-full">
+        <div className="mt-2">
+          <button
+            className="font-bold py-2 px-3 bg-gray-700 text-white w-full rounded-md"
+            onClick={async () => await validateAndLogin(data)}
+          >
+            Login
+          </button>
+        </div>
+      </div>
+      <FormDivider text="SAU" />
+      <div className="col-span-full">
+        <p className="text-sm font-extralight">
+          <span>Nu ai cont? </span>
+          <Link
+            href={{
+              pathname: '/auth/register',
+            }}
+            className="text-indigo-600 font-semibold"
+          >
+            Înscrie-te
+          </Link>
+        </p>
+      </div>
+    </FormBody>
   );
 }

@@ -18,11 +18,14 @@ export async function SignUp(signupData: string) {
   const parsedSignupData = JSON.parse(signupData) as RegisterSchema;
   try {
     const salt = await GenerateSalt();
-    const hashedPassword = await HashPassword(parsedSignupData.password!, salt);
+    const hashedPassword = await HashPassword(
+      parsedSignupData.password!.trim(),
+      salt,
+    );
     const newUser: SignupRegisterSchema = {
-      username: parsedSignupData.username!,
+      username: parsedSignupData.username!.trim(),
       password: hashedPassword,
-      email: parsedSignupData.email!,
+      email: parsedSignupData.email!.trim(),
       salt: salt,
     };
 
@@ -41,7 +44,7 @@ export async function SignUp(signupData: string) {
     id: loginUser[0].id,
     isPremium: loginUser[0].isPremium == 1 ? true : false,
   });
-  redirect('/');
+  return '';
 }
 
 export async function LogIn(loginData: string) {
@@ -61,10 +64,10 @@ export async function LogIn(loginData: string) {
     id: loginUser[0].id,
     isPremium: loginUser[0].isPremium == 1 ? true : false,
   });
-  redirect('/');
+  return '';
 }
 
 export async function LogOut() {
   await removeUserSession();
-  redirect('/');
+  return redirect('/auth/login'); // TODO!!!!!!!!!!!!
 }

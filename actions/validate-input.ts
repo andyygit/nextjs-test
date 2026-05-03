@@ -8,6 +8,8 @@ const validateRules = {
     item === undefined || item === null || item === ''
       ? 'Camp obligatoriu'
       : '',
+  validUsername: (username: string | undefined): string =>
+    username && /^[0-9a-zA-Z]{1,25}$/.test(username) ? '' : 'User invalid',
   validEmail: (email: string | undefined): string =>
     email &&
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/.test(
@@ -20,7 +22,7 @@ const validateRules = {
     (valueToCheck: string | undefined): string =>
       valueToCheck && valueToCheck.length >= limit
         ? ''
-        : `Trebuie sa contina minim ${limit} caractere`,
+        : `Trebuie sa contina minim ${limit} caractere, maxim 25`,
   match: (pw1: string, pw2: string): string =>
     pw1 === pw2 ? '' : 'Parolele nu coincid',
   userExists: async (user: string): Promise<string> =>
@@ -36,6 +38,7 @@ export async function ValidateRegisterInput(input: string) {
   const e: RegisterSchema = {};
   e.username =
     validateRules.required(parsedInput.username) ||
+    validateRules.validUsername(parsedInput.username?.trim()) ||
     validateRules.minLength(5)(parsedInput.username?.trim()) ||
     (await validateRules.userExists(parsedInput.username!));
   e.email =
@@ -61,4 +64,11 @@ export async function ValidateLoginInput(input: string) {
   return Object.values(e).every((val) => val === '')
     ? JSON.stringify({})
     : JSON.stringify(e);
+}
+
+export async function SanitizeTextInput(input: string) {
+  return input.replaceAll(
+    /\d|zero|unu|doi|trei|patru|cinci|sase|șase|sapte|șapte|opt|noua|nouă/g,
+    '',
+  );
 }

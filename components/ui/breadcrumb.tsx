@@ -2,7 +2,7 @@ import { Menu, ChevronRight } from 'lucide-react';
 
 export default function Breadcrumb() {
   return (
-    <div className="flex h-14 items-center border-t border-gray-950/5 px-4 sm:px-6 lg:hidden">
+    <div className="flex h-14 items-center border-t border-gray-950/5 px-4 sm:px-6 max-lg:hidden">
       <button
         type="button"
         className="relative inline-grid size-6 place-items-center rounded-md hover:bg-gray-950/5 -ml-1.5"

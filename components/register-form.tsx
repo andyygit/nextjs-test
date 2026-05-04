@@ -52,6 +52,7 @@ export default function RegisterForm() {
       <BasicInput
         type="text"
         label="Alege nume utilizator"
+        inputId="username"
         inputName="username"
         inputPlaceholder="JohnDoe"
         value={data.username || ''}
@@ -64,6 +65,7 @@ export default function RegisterForm() {
       <BasicInput
         type="email"
         label="Adresa ta de mail"
+        inputId="email"
         inputName="email"
         inputPlaceholder="john@doe.com"
         value={data.email || ''}
@@ -76,6 +78,7 @@ export default function RegisterForm() {
       <BasicInput
         type="password"
         label="Alege o parola"
+        inputId="password"
         inputName="password"
         inputPlaceholder="******"
         value={data.password || ''}
@@ -88,6 +91,7 @@ export default function RegisterForm() {
       <BasicInput
         type="password"
         label="Confirmare parola"
+        inputId="passwordConfirm"
         inputName="passwordConfirm"
         inputPlaceholder="******"
         value={data.passwordConfirm || ''}

@@ -52,6 +52,7 @@ export default function LoginForm() {
       <BasicInput
         type="text"
         label="Utilizator"
+        inputId="username"
         inputName="username"
         iconPrefix="@"
         inputPlaceholder="user"
@@ -65,6 +66,7 @@ export default function LoginForm() {
       <BasicInput
         type="password"
         label="Parola"
+        inputId="password"
         inputName="password"
         inputPlaceholder="******"
         value={data.password || ''}

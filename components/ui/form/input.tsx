@@ -1,6 +1,7 @@
 export default function BasicInput({
   type,
   label,
+  inputId,
   inputName,
   iconPrefix,
   children,
@@ -10,6 +11,7 @@ export default function BasicInput({
 }: {
   type: 'text' | 'email' | 'password';
   label: string;
+  inputId: string;
   inputName: string;
   iconPrefix?: string;
   children: React.ReactNode;
@@ -20,7 +22,7 @@ export default function BasicInput({
   return (
     <div className="col-span-full">
       <label
-        htmlFor={inputName}
+        htmlFor={inputId}
         className="block text-sm font-medium text-gray-900"
       >
         {label}
@@ -34,6 +36,7 @@ export default function BasicInput({
           )}
           <input
             type={type}
+            id={inputId}
             name={inputName}
             placeholder={inputPlaceholder || ''}
             className="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"

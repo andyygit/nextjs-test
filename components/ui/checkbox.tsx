@@ -11,9 +11,9 @@ type CheckBoxProps = {
 function getVariantStyles(variant: Variant) {
   switch (variant) {
     case 'color':
-      return 'bg-blue-700';
+      return '';
     case 'grayscale':
-      return 'bg-gray-700';
+      return '';
     default:
       throw new Error(`Invalid variant: ${variant satisfies never}`);
   }
@@ -27,13 +27,18 @@ export default function Checkbox({
 }: CheckBoxProps) {
   return (
     <>
-      <input
-        {...props}
-        type="checkbox"
-        id={targetId}
-        className={getVariantStyles(variant)}
-      />
-      <label htmlFor={targetId}>{label}</label>
+      <label
+        htmlFor={targetId}
+        className="relative flex items-center gap-[.4em] select-none before:content-[''] before:w-[2em] before:h-[1em] before:bg-red-100 before:rounded-[1em] after:content-[''] after:w-[.9em] after:h-[.9em] after:bg-red-700 after:rounded-[1em] after:absolute after:left-[.1em]"
+      >
+        <input
+          {...props}
+          type="checkbox"
+          id={targetId}
+          className="appearance-none"
+        />
+        {label}
+      </label>
     </>
   );
 }

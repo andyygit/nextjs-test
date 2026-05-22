@@ -1,13 +1,14 @@
 import 'server-only';
 // import { cacheLife } from 'next/cache';
 import {
+  ConnectionOptions,
   createConnection,
   ExecuteValues,
   ResultSetHeader,
   RowDataPacket,
 } from 'mysql2/promise';
 
-const createConnectionOptions = {
+const createConnectionOptions: ConnectionOptions = {
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
